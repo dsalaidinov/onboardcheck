@@ -1,0 +1,187 @@
+{
+  "version": "1.0.0",
+  "company_name": "Doscredobank",
+  "dry_run": true,
+  "edms_provider": {
+    "type": "dms_jwt",
+    "auth_type": "jwt",
+    "endpoint_url": "https://edo-back.dcb.kg",
+    "fallback_to_clipboard": true
+  },
+  "dms": {
+    "base_url": "https://edo-back.dcb.kg",
+    "system_username": "onboardcheck_sys",
+    "system_password": "secret_password",
+    "template_id": null
+  },
+  "roles": [
+    {
+      "id": "java_dev",
+      "name": "Java Developer",
+      "packages": [
+        "git",
+        "jdk-21",
+        "idea-ultimate",
+        "dbeaver"
+      ]
+    },
+    {
+      "id": "devops_eng",
+      "name": "DevOps Engineer",
+      "packages": [
+        "git",
+        "docker-desktop",
+        "kubectl",
+        "helm"
+      ]
+    },
+    {
+      "id": "qa_eng",
+      "name": "QA Engineer",
+      "packages": [
+        "git",
+        "postman",
+        "dbeaver"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "id": "payment_service",
+      "name": "Payment Gateway Service",
+      "description": "Эквайринг и обработка платежей",
+      "resources": [
+        {
+          "id": "gitlab_repo",
+          "name": "GitLab: payment-core",
+          "type": "http_status",
+          "target": "https://gitlab.bank.local/payments/core",
+          "expected_codes": [
+            200,
+            401
+          ],
+          "responsible_team": "DevOps",
+          "request_template": "Прошу предоставить доступ на чтение/запись в GitLab репозиторий 'payments/core'."
+        },
+        {
+          "id": "jira_board",
+          "name": "Jira: PAYM Project",
+          "type": "http_status",
+          "target": "https://jira.bank.local/projects/PAYM",
+          "expected_codes": [
+            200,
+            302
+          ],
+          "responsible_team": "PMO",
+          "request_template": "Прошу предоставить доступ к Jira проекту 'PAYM' (Payment Gateway)."
+        },
+        {
+          "id": "dev_db",
+          "name": "PostgreSQL Dev DB",
+          "type": "tcp_port",
+          "target": "10.20.4.15:5432",
+          "expected_codes": null,
+          "responsible_team": "DBA",
+          "request_template": "Прошу открыть сетевой доступ к БД PostgreSQL Dev (10.20.4.15:5432)."
+        }
+      ]
+    },
+    {
+      "id": "core_banking",
+      "name": "Core Banking System",
+      "description": "Основная банковская платформа",
+      "resources": [
+        {
+          "id": "cbs_api",
+          "name": "CBS REST API",
+          "type": "http_status",
+          "target": "https://cbs.bank.local/api/health",
+          "expected_codes": [
+            200
+          ],
+          "responsible_team": "Core Banking Team",
+          "request_template": "Прошу предоставить доступ к REST API Core Banking System."
+        },
+        {
+          "id": "cbs_db",
+          "name": "Oracle CBS DB",
+          "type": "tcp_port",
+          "target": "10.20.1.10:1521",
+          "expected_codes": null,
+          "responsible_team": "DBA",
+          "request_template": "Прошу открыть сетевой доступ к Oracle БД Core Banking (10.20.1.10:1521)."
+        },
+        {
+          "id": "cbs_docs",
+          "name": "Confluence: CBS Docs",
+          "type": "http_status",
+          "target": "https://confluence.bank.local/display/CBS",
+          "expected_codes": [
+            200,
+            302
+          ],
+          "responsible_team": "Tech Docs",
+          "request_template": "Прошу предоставить доступ к документации CBS в Confluence."
+        }
+      ]
+    }
+  ],
+  "packages": {
+    "git": {
+      "title": "Git for Windows",
+      "type": "exe",
+      "source": "https://software.bank.local/dist/Git-2.44.0-64-bit.exe",
+      "silent_args": "/VERYSILENT /NORESTART",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "jdk-21": {
+      "title": "OpenJDK 21 (LTS)",
+      "type": "msi",
+      "source": "https://software.bank.local/dist/jdk-21.msi",
+      "silent_args": "/quiet /norestart",
+      "sha256": "a3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "idea-ultimate": {
+      "title": "IntelliJ IDEA Ultimate",
+      "type": "exe",
+      "source": "https://software.bank.local/dist/ideaIU-2024.1.exe",
+      "silent_args": "/S /CONFIG=silent.config",
+      "sha256": "b3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "dbeaver": {
+      "title": "DBeaver Community",
+      "type": "exe",
+      "source": "https://software.bank.local/dist/dbeaver-ce-24.0-x86_64-setup.exe",
+      "silent_args": "/S",
+      "sha256": "c3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docker-desktop": {
+      "title": "Docker Desktop",
+      "type": "exe",
+      "source": "https://software.bank.local/dist/Docker.Desktop.Installer.exe",
+      "silent_args": "install --quiet --accept-license",
+      "sha256": "d3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "kubectl": {
+      "title": "kubectl CLI",
+      "type": "exe",
+      "source": "https://software.bank.local/dist/kubectl-1.29.exe",
+      "silent_args": "",
+      "sha256": "e4b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "helm": {
+      "title": "Helm CLI",
+      "type": "exe",
+      "source": "https://software.bank.local/dist/helm-3.14.exe",
+      "silent_args": "",
+      "sha256": "f3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "postman": {
+      "title": "Postman",
+      "type": "exe",
+      "source": "https://software.bank.local/dist/Postman-10.23.exe",
+      "silent_args": "/S",
+      "sha256": "g3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

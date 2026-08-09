@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── CSS Custom Properties ─────────────────────────────────────────────────── */
+:root {
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+}
+
+/* ── Base Resets ────────────────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after {
+    @apply box-border;
+  }
+
+  html {
+    @apply text-sm antialiased;
+    scrollbar-color: hsl(220, 12%, 28%) transparent;
+    scrollbar-width: thin;
+  }
+
+  body {
+    @apply bg-surface-950 text-surface-100 font-sans;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Custom scrollbar (webkit) */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-surface-700 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-surface-200;
+  }
+
+  /* Selection highlight */
+  ::selection {
+    background: hsl(238, 80%, 58%, 0.35);
+  }
+}
+
+/* ── Component Utilities ───────────────────────────────────────────────────── */
+@layer components {
+  /* Glass card — the primary surface element */
+  .card {
+    @apply
+      bg-surface-800
+      border border-surface-700
+      rounded-xl
+      shadow-lg;
+  }
+
+  .card-hover {
+    @apply card transition-all duration-200
+      hover:border-accent-500/60
+      hover:shadow-accent-500/10
+      hover:shadow-xl
+      hover:-translate-y-0.5
+      cursor-pointer;
+  }
+
+  /* Gradient heading accent */
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r
+      from-accent-300 to-accent-500;
+  }
+
+  /* Status dot */
+  .status-dot {
+    @apply inline-block w-2.5 h-2.5 rounded-full;
+  }
+  .status-dot-ok      { @apply status-dot bg-ok shadow-[0_0_6px_theme(colors.ok)]; }
+  .status-dot-error   { @apply status-dot bg-error shadow-[0_0_6px_theme(colors.error)]; }
+  .status-dot-warning { @apply status-dot bg-warning shadow-[0_0_6px_theme(colors.warning)]; }
+  .status-dot-pending { @apply status-dot bg-pending; }
+  .status-dot-checking { @apply status-dot bg-accent-400 animate-pulse; }
+
+  /* Step indicator pill */
+  .step-pill {
+    @apply flex items-center gap-2 px-3 py-1.5
+      text-xs font-medium rounded-full transition-colors duration-200;
+  }
+  .step-pill-active {
+    @apply step-pill bg-accent-600 text-white;
+  }
+  .step-pill-done {
+    @apply step-pill bg-surface-700 text-ok;
+  }
+  .step-pill-idle {
+    @apply step-pill bg-surface-850 text-surface-200;
+  }
+
+  /* Dry-run badge */
+  .dry-run-badge {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1
+      bg-warning/10 text-warning border border-warning/30
+      rounded-full text-xs font-semibold;
+  }
+}

@@ -1,0 +1,53 @@
+[package]
+name = "onboardx"
+version = "0.1.0"
+description = "OnboardCheck — Enterprise Workstation Setup Utility"
+authors = ["OnboardCheck Enterprise Systems"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+# The `_lib` suffix avoids name collision with bin on Windows (rust-lang/cargo#8519)
+name = "onboardx_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri            = { version = "2", features = [] }
+tauri-plugin-opener = "2"
+
+# Serialization
+serde            = { version = "1", features = ["derive"] }
+serde_json       = "1"
+
+# Error handling
+thiserror        = "1"
+anyhow           = "1"
+
+# Async runtime
+tokio            = { version = "1", features = ["full"] }
+
+# HTTP client (TLS via rustls to keep binary small)
+reqwest          = { version = "0.12", default-features = false, features = ["json", "stream", "rustls-tls"] }
+
+# SHA-256 file integrity
+sha2             = "0.10"
+
+# Async DNS resolver
+hickory-resolver = { version = "0.24", features = ["tokio-runtime"] }
+
+# Clipboard (cross-platform)
+arboard          = "3"
+
+# Futures utility
+futures          = "0.3"
+
+# Async trait support
+async-trait      = "0.1"
+
+# Structured logging
+tracing              = "0.1"
+tracing-subscriber   = { version = "0.3", features = ["env-filter"] }
