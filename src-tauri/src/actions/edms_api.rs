@@ -1,8 +1,8 @@
 //! `actions/edms_api.rs`
 //!
 //! `EdmsDirectApi` — submits an access request document directly to the EDMS
-//! REST API endpoint.  On Windows, Windows SSO credentials are forwarded via
-//! the OS credential store (NTLM/Kerberos).  On other platforms this provider
+//! REST API endpoint. On Windows, Windows SSO credentials are forwarded via
+//! the OS credential store (NTLM/Kerberos). On other platforms this provider
 //! returns a descriptive error so the ClipboardFallback is used instead.
 
 use async_trait::async_trait;
@@ -38,6 +38,7 @@ impl EdmsDirectApi {
         use reqwest::{Client, ClientBuilder};
         use serde_json::json;
         use std::time::Duration;
+        use tracing::info;
 
         info!(
             "Submitting EDMS request for resource '{}' via '{}'",
@@ -72,6 +73,8 @@ impl EdmsDirectApi {
                     "Access request created in EDMS for '{}'.",
                     req.resource_name
                 ),
+                dms_document_id: None,
+                dms_document_url: None,
             })
         } else {
             Err(AppError::Action(format!(
